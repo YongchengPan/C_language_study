@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define WIDTH 70
+#define HEIGHT 30
+
+int snake_length = 5;
+
+int initializeGame() {
+        srand(time(0));
+
+        for (int i = 0; i < snake_length; i++) {
+                snake[i].x = snake_length - i + 10;
+                snake[i].y = 5;
+        }
+
+        food.x = rand() % (WIDTH - 2) + 1;
+        food.y = rand() % (HEIGHT - 2) + 1;
+}
+
+int main() {
+        initializeGame();
+        return 0;
+}
