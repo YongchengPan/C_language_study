@@ -1,18 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <termios.h>
+#include <unistd.h>
 
 #define WIDTH 70
 #define HEIGHT 30
+#define MAX_LENGTH 100
 
 typedef struct {
     int x, y;
-    double z;
 } Point;
 
-Point food
-
+Point snake[MAX_LENGTH];
 int snake_length = 5;
+Point food;
 
 int initializeGame() {
         srand(time(0));
@@ -26,7 +28,29 @@ int initializeGame() {
         food.y = rand() % (HEIGHT - 2) + 1;
 }
 
+void setNonCanonicalMode() {
+    struct termios term;
+    tcgetattr(STDIN_FILENO, &term);
+    term.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+
+void drawBoard() {
+    system("clear");
+
+    for (int y = 0; y < HEIGHT; y++) {
+        for (int x = 0; x < WIDTH; x++) {
+            if (y == 0 || y == HEIGHT - 1 || x == 0 || x == WIDTH - 1) {
+                printf("#");
+            }
+        }
+    }
+}
+
 int main() {
         initializeGame();
+        setNonCanonicalMode();
+        drawBoard();
         return 0;
 }
