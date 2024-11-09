@@ -5,6 +5,13 @@
 #define WIDTH 70
 #define HEIGHT 30
 
+typedef struct {
+    int x, y;
+    double z;
+} Point;
+
+Point food
+
 int snake_length = 5;
 
 int initializeGame() {
